@@ -1,0 +1,358 @@
+Create me a gen-ai based vulnerability scanner for source code ci/cd pipeline
+
+
+To create a GenAI-based vulnerability scanner for source code that can be integrated into a CI/CD pipeline, we’ll leverage a local large language model (LLM) to analyze code for common vulnerabilities, such as SQL injection, hard-coded secrets, or insecure functions. This approach ensures privacy by running the model locally and allows customization for specific use cases. The scanner will be implemented in Python, use LM Studio for the LLM, and integrate into a CI/CD pipeline (e.g., GitHub Actions). Below, I outline the solution, provide the code, and explain how to set it up.
+
+Solution Overview
+
+Tool: Custom Python script using a local LLM (via LM Studio) to scan source code for vulnerabilities.
+
+
+
+Functionality: Analyzes code files for issues like SQL injection, hard-coded credentials, insecure cryptographic functions, and more, returning detailed findings.
+
+
+
+CI/CD Integration: Configured for GitHub Actions, with options to adapt for Jenkins or GitLab.
+
+
+
+Privacy: Runs locally to avoid sending sensitive code to external services.
+
+
+
+Output: Reports vulnerabilities with line numbers, issue types, and code snippets, failing the pipeline on critical issues.
+
+
+Prerequisites
+
+LM Studio: Install LM Studio and set up a code-focused LLM (e.g., CodeLlama or a similar model optimized for code analysis).
+
+
+
+Python: Version 3.8+ with requests library.
+
+
+
+GitHub Repository: For CI/CD integration.
+
+
+
+Codebase: Source code files to scan (e.g., Python, JavaScript, or Java).
+
+
+Implementation Code
+
+Below is the Python script for the GenAI-based vulnerability scanner, followed by a GitHub Actions workflow to integrate it into a CI/CD pipeline.
+
+Python Scanner Script (vulnerability_scanner.py)
+
+python
+
+
+import requests
+import os
+import sys
+from typing import List, Tuple
+
+# LM Studio API endpoint (adjust if different)
+LM_STUDIO_API = "http://localhost:1234/v1/completions"
+
+# Comprehensive prompt for vulnerability scanning
+PROMPT = """
+You are an expert security analyst tasked with scanning source code for vulnerabilities. Analyze the provided code and identify security issues such as SQL injection, hard-coded secrets, insecure cryptographic functions, unhandled exceptions, or other common vulnerabilities. For each issue, return:
+- Line number(s)
+- Issue type
+- Code snippet
+- Brief description
+Return results in the format: 'TRUE | line_number | issue_type | code_snippet | description'
+Separate multiple issues with '@@@@'. If no vulnerabilities are found, return 'FALSE'.
+Example:
+TRUE | 5 | SQL Injection | query = f"SELECT * FROM users WHERE id = {user_id}" | Unescaped user input in SQL query can lead to injection.
+"""
+
+def scan_code(file_path: str) -> Tuple[bool, List[str]]:
+    """
+    Scan a single code file for vulnerabilities using the LLM.
+    Returns: (has_vulnerabilities, list_of_issues)
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            code = file.read()
+    except Exception as e:
+        return False, [f"Error reading file {file_path}: {str(e)}"]
+
+    payload = {
+        "prompt": f"{PROMPT}\n\nCode:\n{code}",
+        "max_tokens": 1000,  # Adjust based on model and code length
+        "temperature": 0.3   # Low temperature for deterministic output
+    }
+
+    try:
+        response = requests.post(LM_STUDIO_API, json=payload, timeout=30)
+        response.raise_for_status()
+        result = response.json()['choices'][0]['text'].strip()
+    except Exception as e:
+        return False, [f"Error querying LLM: {str(e)}"]
+
+    if result == "FALSE":
+        return False, ["No vulnerabilities found."]
+    else:
+        return True, result.split("@@@@")
+
+def scan_directory(directory: str) -> Tuple[bool, List[str]]:
+    """
+    Scan all code files in a directory recursively.
+    Supported extensions: .py, .js, .java, .php, .c, .cpp, .cs
+    """
+    supported_extensions = ('.py', '.js', '.java', '.php', '.c', '.cpp', '.cs')
+    results = []
+    has_vulnerabilities = False
+
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith(supported_extensions):
+                file_path = os.path.join(root, file)
+                has_vulns, file_results = scan_code(file_path)
+                if has_vulns:
+                    has_vulnerabilities = True
+                results.append(f"\nFile: {file_path}")
+                results.extend(file_results)
+
+    return has_vulnerabilities, results
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python vulnerability_scanner.py <directory>")
+        sys.exit(1)
+
+    directory = sys.argv[1]
+    has_vulnerabilities, results = scan_directory(directory)
+
+    for result in results:
+        print(result)
+
+    if has_vulnerabilities:
+        sys.exit(1)  # Exit with error code to fail CI/CD pipeline
+
+if __name__ == "__main__":
+    main()
+
+
+
+GitHub Actions Workflow (.github/workflows/vulnerability-scan.yml)
+
+yaml
+
+
+name: GenAI Vulnerability Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  scan:
+    runs-on: self-hosted  # Requires self-hosted runner with LM Studio
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      # Step 3: Install dependencies
+      - name: Install requests
+        run: pip install requests
+
+      # Step 4: Ensure LM Studio is running
+      - name: Check LM Studio
+        run: |
+          curl --fail http://localhost:1234/v1/completions || {
+            echo "LM Studio is not running or not accessible"
+            exit 1
+          }
+
+      # Step 5: Run vulnerability scanner
+      - name: Run GenAI Vulnerability Scanner
+        run: python vulnerability_scanner.py .
+
+      # Step 6: Notify on failure (optional)
+      - name: Notify Slack
+        if: failure()
+        uses: slackapi/slack-github-action@v1
+        with:
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel-id: 'security-alerts'
+          text: 'GenAI Vulnerability Scanner found issues in the pipeline!'
+
+
+
+Setup Instructions
+
+Install LM Studio:
+
+Download and install LM Studio from lmstudio.ai.
+
+
+
+Load a code-focused LLM (e.g., CodeLlama-13B or similar) and start the local server (default: http://localhost:1234).
+
+
+
+Ensure the model is running during CI/CD execution.
+
+
+Set Up Python Environment:
+
+Install Python 3.8+.
+
+
+
+Install the requests library: pip install requests.
+
+
+
+Save the scanner script as vulnerability_scanner.py in your repository.
+
+
+Configure Self-Hosted Runner:
+
+Since LM Studio runs locally, set up a self-hosted GitHub Actions runner on a machine where LM Studio is installed.
+
+
+
+Ensure the runner has Python and access to the LM Studio API.
+
+
+Add Workflow to GitHub:
+
+Create .github/workflows/vulnerability-scan.yml in your repository with the provided YAML.
+
+
+
+Optionally, add a Slack bot token to GitHub secrets (SLACK_BOT_TOKEN) for notifications.
+
+
+Test the Scanner:
+
+Create a sample vulnerable file (e.g., example.py):
+
+python
+
+
+# example.py
+user_id = input("Enter ID: ")
+query = f"SELECT * FROM users WHERE id = {user_id}"  # Vulnerable to SQL injection
+password = "hardcoded_secret123"  # Hard-coded secret
+
+
+Run locally: python vulnerability_scanner.py .
+
+
+
+Expected output:
+
+
+File: example.py
+TRUE | 2 | SQL Injection | query = f"SELECT * FROM users WHERE id = {user_id}" | Unescaped user input in SQL query can lead to injection.
+@@@@
+TRUE | 3 | Hard-coded Secret | password = "hardcoded_secret123" | Hard-coded credentials detected.
+
+
+Run in CI/CD:
+
+Push changes to trigger the GitHub Actions workflow.
+
+
+
+The pipeline will fail if vulnerabilities are found (exit code 1).
+
+
+Customizing the Scanner
+
+Supported Languages: The script scans common file extensions (.py, .js, .java, etc.). Add more extensions in supported_extensions as needed.
+
+
+
+Prompt Tuning: Modify the PROMPT to focus on specific vulnerabilities (e.g., XSS, insecure deserialization) or improve accuracy for your tech stack.
+
+
+
+Severity Thresholds: Update the script to categorize issues by severity (e.g., low, medium, high) and fail the pipeline only on high-severity issues.
+
+
+
+Output Formats: Adjust the output format for integration with other tools (e.g., JSON for reporting).
+
+
+CI/CD Integration Notes
+
+GitHub Actions: The provided workflow uses a self-hosted runner due to the local LLM requirement. For cloud-based CI/CD, you’d need a hosted LLM service (e.g., via xAI’s API, see x.ai/api).
+
+
+
+Jenkins/GitLab: Adapt the workflow by adding a step to run python vulnerability_scanner.py . in your pipeline configuration.
+
+
+
+Performance: Scanning large codebases may be slow with local LLMs. Optimize by limiting scans to changed files (e.g., using git diff in the pipeline).
+
+
+Limitations
+
+Accuracy: LLMs may produce false positives/negatives. Tune the prompt and validate findings with tools like Snyk or Semgrep.
+
+
+
+Resource Usage: Local LLMs require significant CPU/GPU resources. Ensure your CI/CD runner has adequate hardware.
+
+
+
+Model Selection: CodeLlama is a good starting point, but experiment with other models for better accuracy.
+
+
+
+Scope: This scanner focuses on code-level issues. For dependencies or IaC, combine with tools like Snyk or Trivy.
+
+
+Recommendations
+
+Hybrid Approach: Pair this custom scanner with established tools (e.g., Snyk for dependencies, GitGuardian for secrets) for comprehensive coverage.
+
+
+
+Regular Updates: Keep the LLM model updated in LM Studio to improve detection capabilities.
+
+
+
+Testing: Test the scanner on a small codebase first, refining the prompt to reduce noise.
+
+
+Example Output in CI/CD
+
+For a repository with example.py (above), the GitHub Actions log might show:
+
+
+File: example.py
+TRUE | 2 | SQL Injection | query = f"SELECT * FROM users WHERE id = {user_id}" | Unescaped user input in SQL query can lead to injection.
+@@@@
+TRUE | 3 | Hard-coded Secret | password = "hardcoded_secret123" | Hard-coded credentials detected.
+Error: Process completed with exit code 1.
+
+
+
+The pipeline fails, alerting developers to fix the issues.
+
+If you need help adapting this for a specific language, CI/CD platform, or additional vulnerability types, let me know!
+
+
