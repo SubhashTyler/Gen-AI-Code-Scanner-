@@ -1,0 +1,11 @@
+[Desktop Entry].
+
+Name=LM Studio
+
+Type=Application
+
+O
+
+Exec=/home/ahaber/lm_studio/squashfs-root/lm-studio
+
+Icon=/home/ahaber/lm_studio/squashfs-root/lm-studio.png Terminal=false
