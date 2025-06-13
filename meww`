@@ -1,0 +1,19 @@
+SI No	Vulnerability	CVSS-Score	Severity
+1	Brute Force	6.5	Medium
+2	Command Injection	8	High
+3	CSRF	6.5	Medium
+4	File Inclusion	7.5	High
+5	File Upload	7.5	High
+6	Insecure CAPTCHA	5	Medium
+7	SQL Injection	9	Critical
+8	SQL Injection (Blind)	8	High
+9	Weak Session IDs	6	Medium
+10	XSS (DOM)	6.1	Medium
+11	XSS (Reflected)	6.1	Medium
+12	XSS (Stored)	7.5	High
+13	CSP Bypass	5	Medium
+14	Javascript	4	Medium
+15	Authorisation Bypass	9	Critical
+16	Open HTTP Redirect	6	Medium
+17	Cryptography	7	HIgh
+18	API	6.5	Medium
