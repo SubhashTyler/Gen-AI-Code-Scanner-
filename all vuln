@@ -54,3 +54,13 @@ API
 17. Cryptography: Weak or misused encryption algorithms expose sensitive data to unauthorized access or tampering.
 
 18. API: Insecure or unauthenticated API endpoints allow attackers to access or manipulate backend data and functionality.
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+X-Content-Type-Options Header Missing
+
+Absence of Anti-CSRF Tokens
+Web Browser XSS Protection Not Enabled
+X-Frame-Options Header Not Set
+
