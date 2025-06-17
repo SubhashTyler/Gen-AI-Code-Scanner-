@@ -1,0 +1,145 @@
+Title
+
+[CRITICAL] Web Shell Can Be Uploaded To Goin Complete Access To
+
+Server
+
+[CRITICAL] Broken Access Control Leads to Unauthorized Privilege Escalation
+
+Critical
+
+8
+
+3
+
+Critical
+
+Demo Web
+
+App
+
+Demo Web
+
+4
+
+App
+
+[CRITICAL] Admin Account Takeover On Update Contact Details
+
+Unprotected Magmi - Can Be Used As A Backdoor, Full Complete Database Access
+
+High
+
+6
+
+5
+
+High
+
+6
+
+Demo Web
+
+App
+
+Demo Web
+
+6
+
+App
+
+Stripe API Key Disclosed
+
+Possible To Bypass Work Email Only Restriction And Gain Access To Other Domains
+
+High
+
+6
+
+7
+
+Possible For Lower Privileged Users To See Details Of Admin Users
+
+High
+
+6
+
+Demo Web
+
+App
+
+Demo Web
+
+8
+
+Outdated and Vulnerable Components In Use
+
+Medium
+
+App
+
+Demo Web
+
+Reverse Tabnabbing
+
+Medium
+
+App
+
+Demo Web
+
+10
+
+Insecure HTTP Cookies
+
+Medium
+
+App
+
+Demo Web
+
+11
+
+Medium
+
+4.8
+
+App
+
+Demo Web
+
+12
+
+App
+
+Missing API Security Headers
+
+Possible To Prevent Normal Users From Booking Tickets By Performing Large Number Of False Pre-Bookings
+
+Medium
+
+47
+
+Demo Web
+
+13
+
+Cross Domain Referrer Leakage
+
+Medium
+
+4.3
+
+App
+
+14
+
+Secure SSH Access
+
+Demo Web
+
+App
+
+15
+
+No CAPTCHA Implemented
