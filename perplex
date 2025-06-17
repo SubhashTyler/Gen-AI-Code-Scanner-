@@ -1,0 +1,85 @@
+# Updated Vulnerability Names
+
+Below is an updated list of vulnerabilities, formatted as requested, each with a concise description reflecting the nature of the issue or missing security control.
+
+## Application Vulnerabilities
+
+| Vulnerability                        | Updated Name/Description                                                      |
+|--------------------------------------|-------------------------------------------------------------------------------|
+| Brute Force                         | Brute Force: no account lockout on repeated authentication attempts           |
+| Command Injection                   | Command Injection: user input not sanitized, leading to OS command execution  |
+| CSRF                                | CSRF: missing anti-csrf tokens                                                |
+| File Inclusion                      | File Inclusion: unsanitized path input allows arbitrary file inclusion        |
+| File Upload                         | File Upload: unrestricted upload allows web shell execution                   |
+| Insecure CAPTCHA                    | Insecure CAPTCHA: weak or predictable challenge, easily bypassed              |
+| SQL Injection                       | SQL Injection: user input not sanitized in SQL queries                        |
+| SQL Injection (Blind)               | Blind SQL Injection: no error feedback, but queries still injectable          |
+| Weak Session IDs                    | Weak Session IDs: predictable or short session tokens                         |
+| XSS (DOM)                           | DOM XSS: client-side scripts vulnerable to injection                          |
+| XSS (Reflected)                     | Reflected XSS: input reflected without sanitization                           |
+| XSS (Stored)                        | Stored XSS: input stored and rendered unsanitized                             |
+| CSP Bypass                          | CSP Bypass: weak or misconfigured Content Security Policy                     |
+| Javascript                          | JavaScript Injection: unsanitized input leads to script execution             |
+| Authorisation Bypass                | Authorization Bypass: insufficient access controls allow privilege escalation  |
+| Open HTTP Redirect                  | Open Redirect: user input controls redirect destination                       |
+| Cryptography                        | Cryptography: use of weak or outdated cryptographic algorithms                |
+| API                                 | API: missing authentication or improper access controls                       |
+
+## Additional Security Findings
+
+| Issue                                               | Updated Name/Description                                                      |
+|-----------------------------------------------------|-------------------------------------------------------------------------------|
+| X-Content-Type-Options Header Missing               | X-Content-Type-Options Header: missing 'nosniff' allows MIME sniffing attacks [1][2][3] |
+| Absence of Anti-CSRF Tokens                         | CSRF: missing anti-csrf tokens [4][5]                                         |
+| Web Browser XSS Protection Not Enabled              | X-XSS-Protection Header: not set, browser XSS filter disabled [6]             |
+| X-Frame-Options Header Not Set                      | X-Frame-Options Header: not set, vulnerable to clickjacking [7][8]          |
+| [CRITICAL] Web Shell Can Be Uploaded                | File Upload: unrestricted upload allows remote code execution [9][10]         |
+| [CRITICAL] Broken Access Control                    | Broken Access Control: leads to unauthorized privilege escalation [11][12]     |
+| [CRITICAL] Admin Account Takeover On Update Contact Details | Account Takeover: insufficient verification on contact update [13]      |
+| Unprotected Magmi - Backdoor                        | Magmi Plugin: unprotected, enables backdoor and full database access [14]      |
+| Stripe API Key Disclosed                            | Sensitive Data Exposure: Stripe API key leaked in code repository [15]         |
+| Bypass Work Email Only Restriction                  | Email Restriction Bypass: can register with unauthorized domains               |
+| Lower Privileged Users See Admin Details            | Insecure Direct Object Reference: privilege escalation exposes admin data       |
+| Outdated and Vulnerable Components In Use           | Vulnerable Components: outdated libraries or dependencies in use [16]          |
+| Reverse Tabnabbing                                 | Reverse Tabnabbing: links allow window.opener manipulation                     |
+| Insecure HTTP Cookies                              | Insecure Cookies: missing Secure/HttpOnly/ SameSite flags                      |
+| Missing API Security Headers                       | API Security Headers: missing standard security headers                        |
+| Prevent Normal Users From Booking Tickets           | Denial of Service: bulk pre-bookings prevent legitimate access                 |
+| Cross Domain Referrer Leakage                      | Referrer Leakage: sensitive data sent via HTTP Referer header                  |
+| Secure SSH Access                                 | SSH Access: weak configuration or credentials                                  |
+| No CAPTCHA Implemented                            | CAPTCHA: missing, allows automated abuse                                       |
+
+---
+
+**Note:** Each vulnerability is described in a format suitable for use as a heading or summary in a penetration testing report or proof-of-concept documentation. All descriptions are based on standard security best practices and mapped to the issues you provided, with references for specific header-related vulnerabilities and critical findings where available[1][2][3][4][6][5][7][8][9][11][10][12][13][14][15][16].
+
+[1] https://www.iothreat.com/blog/x-content-type-options-header-missing
+[2] https://www.invicti.com/web-vulnerability-scanner/vulnerabilities/missing-x-content-type-options-header/
+[3] https://docs.stackhawk.com/vulnerabilities/10021/
+[4] https://scanrepeat.com/web-security-knowledge-base/absence-of-anti-csrf-tokens
+[5] https://www.iothreat.com/blog/absence-of-anti-csrf-tokens
+[6] https://www.iothreat.com/blog/web-browser-xss-protection-not-enabled
+[7] https://www.invicti.com/blog/web-security/missing-x-frame-options-header/
+[8] https://www.fortra.com/resources/vulnerabilities/missing-xframe-options-response
+[9] https://www.cobalt.io/blog/file-upload-vulnerabilities
+[10] https://cylab.be/blog/255/web-shells-and-the-dangers-of-unrestricted-file-upload
+[11] https://heimdalsecurity.com/blog/broken-access-control/
+[12] https://www.synack.com/exploits-explained/preventing-broken-access-control-the-no-1-vulnerability-in-the-owasp-top-10-2021/
+[13] https://www.vaadata.com/blog/exploring-email-change-vulnerabilities-and-security-best-practices/
+[14] https://threatpost.com/magento-sites-vulnerable-to-rce-stemming-from-magmi-plugin-flaws/158864/
+[15] https://github.com/tktchurch/website/security/advisories/GHSA-x3m6-5hmf-5x3w
+[16] https://www.vumetric.com/blog/owasp-top-10-a06-vulnerable-and-outdated-components-explained/
+[17] https://www.zaproxy.org/docs/alerts/10021/
+[18] https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options
+[19] https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options
+[20] https://stackoverflow.com/questions/66003519/x-frame-options-header-not-set-how-do-i-set-it
+[21] https://www.vaadata.com/blog/account-takeover-techniques-and-security-best-practices/
+[22] https://infosecwriteups.com/authorization-bypass-gmail-2949af041fb?gi=0a35c46af939
+[23] https://answers.microsoft.com/en-us/windows/forum/all/warning-new-windows-10-vulnerability-allows-anyone/0e0fa60c-2782-4bd5-badf-e69a75c3f4e7
+[24] https://www.screamingfrog.co.uk/seo-spider/issues/security/missing-x-content-type-options-header/
+[25] https://probely.com/vulnerabilities/insecure-browser-xss-protection-enabled/
+[26] https://beaglesecurity.com/blog/vulnerability/x-frame-options-header-not-implemented.html
+[27] https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html
+[28] https://hackerone.com/reports/388254
+[29] https://nvd.nist.gov/vuln/detail/CVE-2023-27576
+[30] https://hackerone.com/reports/906790
