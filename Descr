@@ -1,0 +1,113 @@
+Absolutely! Below is the **complete list of all 18 vulnerabilities** in the **DVWA (Damn Vulnerable Web Application)**, each with a description starting with **“During our pentest, it was observed that”**, and using the **exact DVWA module names**:
+
+---
+
+### 1. **Brute Force**
+
+**During our pentest, it was observed that** the application accepts unlimited login attempts without delay or CAPTCHA, allowing attackers to perform brute force attacks on user credentials.
+
+---
+
+### 2. **Command Injection**
+
+**During our pentest, it was observed that** the application executes operating system commands directly from user input, without validation, allowing attackers to execute arbitrary commands.
+
+---
+
+### 3. **CSRF (Cross-Site Request Forgery)**
+
+**During our pentest, it was observed that** the application performs sensitive actions without verifying request authenticity, making it vulnerable to CSRF attacks.
+
+---
+
+### 4. **File Inclusion**
+
+**During our pentest, it was observed that** the application includes files based on user input without sanitization, resulting in Local File Inclusion (LFI) and potential access to system files.
+
+---
+
+### 5. **File Upload**
+
+**During our pentest, it was observed that** the file upload functionality accepts and stores malicious file types without validation, allowing remote code execution via web shells.
+
+---
+
+### 6. **Insecure CAPTCHA**
+
+**During our pentest, it was observed that** the CAPTCHA mechanism was weak, predictable, or easily bypassed, making it ineffective against automated attacks.
+
+---
+
+### 7. **SQL Injection**
+
+**During our pentest, it was observed that** the application directly incorporates user input into SQL queries, enabling attackers to manipulate queries and extract or alter database contents.
+
+---
+
+### 8. **XSS (Stored)**
+
+**During our pentest, it was observed that** the application stores and displays unescaped user input, leading to Stored XSS where malicious scripts execute whenever data is viewed.
+
+---
+
+### 9. **XSS (Reflected)**
+
+**During our pentest, it was observed that** user input is reflected back in responses without encoding, making the application vulnerable to Reflected XSS attacks.
+
+---
+
+### 10. **Weak Session IDs**
+
+**During our pentest, it was observed that** the application uses predictable or insufficiently randomized session identifiers, making it prone to session hijacking.
+
+---
+
+### 11. **JavaScript Vulnerability (Client-Side Scripting)**
+
+**During our pentest, it was observed that** insecure client-side scripts were present which could be manipulated or exploited to leak sensitive information or escalate attacks.
+
+---
+
+### 12. **Security Misconfiguration**
+
+**During our pentest, it was observed that** the application exposes debug messages, stack traces, and uses default configurations, which provide attackers with useful information.
+
+---
+
+### 13. **Unvalidated Redirects and Forwards**
+
+**During our pentest, it was observed that** the application redirects users based on untrusted input without validation, allowing phishing and social engineering attacks.
+
+---
+
+### 14. **HTML Injection**
+
+**During our pentest, it was observed that** the application fails to sanitize HTML input, enabling attackers to inject arbitrary HTML into the web page, potentially leading to UI redressing or content spoofing.
+
+---
+
+### 15. **Command Execution via User-Agent Header**
+
+**During our pentest, it was observed that** input from the User-Agent header was executed or logged insecurely, leading to potential command execution or log injection attacks.
+
+---
+
+### 16. **Open Redirect**
+
+**During our pentest, it was observed that** the application allowed redirection to arbitrary URLs based on user-controlled input, enabling phishing and malicious redirection.
+
+---
+
+### 17. **Clickjacking**
+
+**During our pentest, it was observed that** the application does not implement proper headers (like `X-Frame-Options`), making it susceptible to clickjacking attacks.
+
+---
+
+### 18. **Path Traversal**
+
+**During our pentest, it was observed that** the application permits directory traversal using sequences like `../`, allowing unauthorized access to restricted server files.
+
+---
+
+Let me know if you'd like this in table format (with CVSS scores, OWASP mapping, or risk ratings) or exported as a report.
