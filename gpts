@@ -1,0 +1,44 @@
+Based on your provided list of vulnerabilities and contextual clues, here is an updated and **refined list of vulnerability names** in the format like **“CSRF: Missing anti-CSRF tokens”**, aligned with OWASP-style clarity and suitable for web app PoC reports:
+
+---
+
+1. **Brute Force**: No rate-limiting or account lockout on authentication attempts
+2. **Command Injection**: Unsanitized input directly executed on the system shell
+3. **CSRF**: Missing anti-CSRF tokens in state-changing requests
+4. **File Inclusion**: User input used to construct file paths without validation
+5. **File Upload**: Web shell upload possible due to insufficient file validation
+6. **Insecure CAPTCHA**: CAPTCHA missing or trivially bypassable
+7. **SQL Injection**: Input unsanitized in SQL queries, leading to data exposure
+8. **SQL Injection (Blind)**: Input affects server response without direct output
+9. **Weak Session IDs**: Predictable or non-random session tokens in use
+10. **XSS (DOM)**: Client-side scripts insecurely process user-controlled input
+11. **XSS (Reflected)**: Unescaped user input reflected in response content
+12. **XSS (Stored)**: Persistent JavaScript injection stored in application state
+13. **CSP Bypass**: Content Security Policy misconfigured or not enforced
+14. **JavaScript**: Sensitive logic or keys exposed in frontend code
+15. **Authorization Bypass**: Missing access control on protected resources
+16. **Open HTTP Redirect**: Redirects based on user input without validation
+17. **Cryptography**: Weak encryption or improper implementation in use
+18. **API**: Sensitive API endpoints exposed or lack authentication
+19. **X-Content-Type-Options**: Header missing, allowing MIME-type sniffing
+20. **X-Frame-Options**: Header not set, allowing clickjacking attacks
+21. **X-XSS-Protection**: Browser XSS protection disabled or not set
+22. **Web Shell Upload**: Unrestricted file upload enables remote code execution
+23. **Broken Access Control**: Role escalation due to insufficient backend checks
+24. **Account Takeover**: Admin account hijack via insecure contact update endpoint
+25. **Unprotected Admin Tools**: Magmi admin panel exposed with full DB access
+26. **API Key Exposure**: Stripe API key disclosed in frontend or source
+27. **Email Domain Bypass**: Work email domain restriction can be bypassed
+28. **Information Disclosure**: Lower-privileged users can access admin data
+29. **Vulnerable Components**: Outdated libraries with known CVEs in use
+30. **Reverse Tabnabbing**: Target="\_blank" without `rel="noopener"`
+31. **Insecure Cookies**: Missing `HttpOnly`, `Secure`, or `SameSite` flags
+32. **API Security Headers**: Essential headers like `Authorization`, `CORS`, `Rate-Limit` missing
+33. **Booking Abuse**: No validation on booking allows denial of service via false requests
+34. **Referrer Leakage**: Cross-domain requests leak sensitive URLs via `Referer` header
+35. **SSH Access Exposure**: SSH open to the internet without restrictions
+36. **CAPTCHA Missing**: No CAPTCHA challenge present on key functionality
+
+---
+
+Let me know if you'd like this exported in CSV or JSON format, or grouped by risk (e.g., critical/high/medium/low).
