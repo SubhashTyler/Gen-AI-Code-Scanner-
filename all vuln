@@ -16,3 +16,41 @@ Authorisation Bypass
 Open HTTP Redirect
 Cryptography
 API
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+1. Brute Force: Repeated automated attempts to guess valid credentials due to lack of rate-limiting or account lockout.
+
+2. Command Injection: Unsanitized user input is executed as system commands, allowing attackers to run arbitrary code on the server.
+
+3. CSRF (Cross-Site Request Forgery): Exploits authenticated users by tricking their browser into sending unauthorized requests to a trusted site.
+
+4. File Inclusion: Vulnerable code allows attackers to include arbitrary files from the server (LFI) or remote sources (RFI).
+
+5. File Upload: Poor file validation lets attackers upload malicious files like web shells or scripts to execute on the server.
+
+6. Insecure CAPTCHA: Weak or predictable CAPTCHA mechanisms fail to block bots or automated abuse of functionality.
+
+7. SQL Injection: Unvalidated input is directly included in SQL queries, allowing attackers to read or modify database contents.
+
+8. SQL Injection (Blind): Attackers infer data from a database by observing application behavior without seeing direct output.
+
+9. Weak Session IDs: Predictable or short session identifiers make it easy for attackers to hijack authenticated user sessions.
+
+10. XSS (DOM): Malicious JavaScript is injected and executed via client-side DOM manipulation without proper sanitization.
+
+11. XSS (Reflected): Unsanitized input is immediately reflected in responses, enabling script execution in users' browsers.
+
+12. XSS (Stored): Malicious scripts are stored on the server and served to other users, enabling persistent client-side attacks.
+
+13. CSP Bypass: Misconfigured Content Security Policy allows attackers to bypass restrictions and execute unauthorized scripts.
+
+14. JavaScript: Insecure or exposed client-side logic can be tampered with, revealing sensitive data or altering behavior.
+
+15. Authorization Bypass: Lack of proper access checks lets unauthorized users access or modify protected resources.
+
+16. Open HTTP Redirect: Unvalidated redirect parameters allow attackers to redirect users to malicious external websites.
+
+17. Cryptography: Weak or misused encryption algorithms expose sensitive data to unauthorized access or tampering.
+
+18. API: Insecure or unauthenticated API endpoints allow attackers to access or manipulate backend data and functionality.
