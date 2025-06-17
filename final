@@ -1,0 +1,24 @@
+File Inclusion: Unsanitized path input allows arbitrary file inclusion
+File Upload: Unrestricted upload allows web shell execution
+Insecure CAPTCHA: CAPTCHA missing or trivially bypassable
+SQL Injection: Input unsanitized in SQL queries, leading to data exposure
+Blind SQL Injection: no error feedback, but queries still injectable
+Weak Session IDs: Predictable or non-random session tokens in use
+
+XSS (DOM): Client-side scripts insecurely process user-controlled input
+
+XSS (Reflected): Unescaped user input reflected in response content
+
+Stored XSS: Input stored and rendered unsanitized
+
+CSP Bypass: Content Security Policy misconfigured or not enforced
+
+JavaScript: Sensitive logic or keys exposed in frontend code
+
+Authorization Bypass: Insufficient access controls allow privilege escalation
+
+Open HTTP Redirect: Redirects based on user input without validation
+
+Cryptography: Weak encryption or improper implementation in use
+
+API: Sensitive API endpoints exposed or lack authentication
