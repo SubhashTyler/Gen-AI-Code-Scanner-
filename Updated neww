@@ -1,0 +1,188 @@
+Vector String
+
+Base Score
+
+Severity
+
+Brute Force
+
+No rate-limiting or account lockout on authentication attempts
+
+CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N
+
+5.3
+
+Medium
+
+Command Injection
+
+Unsanitized input directly executed on system shell
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H
+
+9.9
+
+Critical
+
+CSRF
+
+Missing anti-CSRF tokens in state-changing requests
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N
+
+6.5
+
+Medium
+
+File Inclusion
+
+Unsanitized path input allows arbitrary file inclusion
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N
+
+9.3
+
+Critical
+
+File Upload
+
+Web shell upload possible due to insufficient file validation
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N
+
+8.7
+
+High
+
+Insecure CAPTCHA
+
+CAPTCHA missing or trivially bypassable
+
+CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N
+
+4.2
+
+Medium
+
+SQL Injection
+
+Input unsanitized in SQL queries, leading to data exposure
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N
+
+9.3
+
+Critical
+
+Blind SQL Injection
+
+No error feedback, but queries still injectable
+
+CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N
+
+8.7
+
+High
+
+Weak Session IDs
+
+Predictable or non-random session tokens in use
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N
+
+6.5
+
+Medium
+
+XSS (DOM)
+
+Client-side scripts insecurely process user-controlled input
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N
+
+5.3
+
+Medium
+
+XSS (Reflected)
+
+Unescaped user input reflected in response content
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N
+
+6.5
+
+Medium
+
+XSS (Stored)
+
+Input stored and rendered unsanitized
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N
+
+8.7
+
+High
+
+CSP Bypass
+
+Content Security Policy misconfigured or not enforced
+
+CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N
+
+6.1
+
+Medium
+
+JavaScript
+
+Sensitive logic or keys exposed in frontend code
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N
+
+7.2
+
+High
+
+Authorization Bypass
+
+Insufficient access controls allow privilege escalation
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N
+
+8.7
+
+High
+
+Open HTTP Redirect
+
+Redirects based on user input without validation
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N
+
+4.8
+
+Medium
+
+Cryptography
+
+Weak encryption or improper implementation in use
+
+CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+
+7.2
+
+High
+
+API
+
+Sensitive API endpoints exposed or lack authentication
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N
+
+8.7
+
+High
+
+Explanation of Scores
+
