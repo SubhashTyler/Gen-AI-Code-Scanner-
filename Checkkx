@@ -1,0 +1,48 @@
+Below is a structured table for the listed vulnerabilities, with **hypothetical CVSS v4.0 vector strings and ratings** based on typical web application flaw patterns. These are not official CVSS scores for DVWA but are constructed according to CVSS v4.0 guidelines and common real-world analogs[1][2][7].
+
+| Vulnerability Type          | Example CVSS v4.0 Vector String (Hypothetical)          | CVSS v4.0 Score | Rating (CVSS v4.0) |
+|----------------------------|--------------------------------------------------------|-----------------|--------------------|
+| Brute Force                | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N | 5.3             | Medium             |
+| Command Injection          | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N | 9.8             | Critical           |
+| CSRF                       | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N | 6.5             | Medium             |
+| File Inclusion             | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N | 9.8             | Critical           |
+| File Upload                | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N | 9.8             | Critical           |
+| Insecure CAPTCHA           | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N | 6.1             | Medium             |
+| SQL Injection              | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N | 9.8             | Critical           |
+| SQL Injection (Blind)      | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N | 9.3             | Critical           |
+| Weak Session IDs           | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N | 6.1             | Medium             |
+| XSS (DOM)                  | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N | 6.5             | Medium             |
+| XSS (Reflected)            | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N | 6.5             | Medium             |
+| XSS (Stored)               | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N | 8.6             | High               |
+| CSP Bypass                 | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N | 6.5             | Medium             |
+| JavaScript                 | *Depends on impact* — see notes below                  | —               | —                  |
+| Authorization Bypass       | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N | 9.8             | Critical           |
+| Open HTTP Redirect         | CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N | 5.3             | Medium             |
+| Cryptography               | *Depends on impact* — see notes below                  | —               | —                  |
+| API                        | *Depends on impact* — see notes below                  | —               | —                  |
+
+**Notes:**
+
+- **JavaScript** and **Cryptography** are not vulnerabilities by themselves but can be exploited if poorly implemented. If you specify the exact exploit (e.g., weak crypto, insecure JS), a CVSS vector can be determined.
+- **API** vulnerabilities are broad—examples include broken authentication, excessive data exposure, etc. Each would have its own CVSS vector.
+- **Stored XSS** is rated higher than reflected/DOM XSS due to persistent impact.
+- **Blind SQL Injection** is rated slightly lower than regular SQL Injection due to reduced availability impact.
+- **Insecure CAPTCHA** and **Weak Session IDs** are considered medium risk as they usually require additional steps to exploit fully.
+- **Open HTTP Redirect** is considered medium risk, as it can enable phishing but does not directly compromise data or system integrity.
+
+**CVSS v4.0 Rating Ranges:**
+- **Low:** 0.1–3.9
+- **Medium:** 4.0–6.9
+- **High:** 7.0–8.9
+- **Critical:** 9.0–10.0[1][2][7]
+
+This table provides a **generalized, educational overview** and should be adapted for specific real-world scenarios and actual system configurations.
+
+[1] https://www.first.org/cvss/specification-document
+[2] https://www.first.org/cvss/v4-0/
+[3] https://nvd.nist.gov/vuln-metrics
+[4] https://www.scribd.com/document/870621268/Penetration-Testing-Report-DVWA
+[5] https://blog.qualys.com/product-tech/2023/11/02/cvss-v4-is-now-live-and-what-do-you-need-to-know
+[6] https://github.com/digininja/DVWA
+[7] https://checkmarx.com/blog/cvss4-what-you-need-to-know-about-the-latest-version/
+[8] https://www.first.org/cvss/v4-0/user-guide
